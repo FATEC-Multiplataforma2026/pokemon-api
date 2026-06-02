@@ -29,7 +29,14 @@ jobs:
       - name: Create env file
         run: |
           cat <<EOF > .env
-          APP_NAME=${{ secrets.APP_NAME }}
+          POKEMON_API_NAME=${{ secrets.POKEMON_API_NAME }}
+          POKEMON_API_DYNAMO_REGION=${{ secrets.AWS_CLOUD_REGION_PROD }}
+          POKEMON_API_ACCESS_KEY=${{ secrets.AWS_CLOUD_ACCESS_KEY }}
+          POKEMON_API_SECRET_KEY=${{ secrets.AWS_CLOUD_SECRET_KEY }}
+          POKEMON_API_DYNAMO_TABLE_NAME=${{ secrets.POKEMON_API_DYNAMO_TABLE_NAME }}
+          POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE=${{ secrets.POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE }}
+          POKEMON_DYNAMO_USERS_TABLE=${{ secrets.POKEMON_DYNAMO_USERS_TABLE }}
+          POKEAPI_URL=${{ secrets.POKEAPI_URL }}
           EOF
 
       - name: Setup AWS SAM
