@@ -66,13 +66,11 @@ jobs:
       - name: List target folder
         run: ls -lah target
 
-      - name: SAM Build
-        run: sam build --use-container
-
       - name: SAM Deploy
         run: |
           sam deploy \
             --no-confirm-changeset \
+            --template-file template.yaml \
             --config-file samconfig.toml \
             --config-env prod \
             --no-fail-on-empty-changeset \
