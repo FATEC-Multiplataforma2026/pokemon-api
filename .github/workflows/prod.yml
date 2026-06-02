@@ -80,6 +80,5 @@ jobs:
             --no-fail-on-empty-changeset \
             --stack-name pokemon-api \
             --resolve-s3 \
-            --parameter-overrides CognitoClientId=${{ secrets.CLIENT_ID }} \
             --capabilities CAPABILITY_IAM \
             --region ${{ secrets.AWS_CLOUD_REGION_PROD }}
