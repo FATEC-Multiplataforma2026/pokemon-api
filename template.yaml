@@ -64,25 +64,25 @@ Resources:
             Path: /api-pokemon/auth/v1/login
             Method: POST
             ApiId: !Ref PokemonApi
-        team-get:
+        TeamGet:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/team
             Method: GET
             ApiId: !Ref PokemonApi
-        team-put:
+        TeamPut:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/team
             Method: PUT
             ApiId: !Ref PokemonApi
-        captured-put:
+        CapturedPut:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/captured
             Method: PUT
             ApiId: !Ref PokemonApi
-        captured-delete:
+        CapturedDelete:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/captured
