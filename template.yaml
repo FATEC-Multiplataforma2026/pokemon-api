@@ -25,15 +25,7 @@ Resources:
       CorsConfiguration:
         AllowOrigins: [ "*" ]
         AllowMethods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
-      Auth:
-        DefaultAuthorizer: CognitoAuthorizer
-        Authorizers:
-          CognitoAuthorizer:
-            JwtConfiguration:
-              issuer: COGNITO_ISSUER
-              audience:
-                - COGNITO_AUDIENCE
-            IdentitySource: "$request.header.Authorization"
+
 
   PokemonApiFunction:
     Type: AWS::Serverless::Function
@@ -59,12 +51,6 @@ Resources:
           POKEMON_DYNAMO_USERS_TABLE: !Ref appDynamoUsersTable
       Policies:
         - AWSLambdaBasicExecutionRole
-        - Statement:
-            - Effect: Allow
-              Action:
-                - cognito-idp:AdminInitiateAuth
-              Resource:
-                - arn:aws:cognito-idp:us-east-1:103120217022:userpool/us-east-1_lXxl9337a
       Events:
         Register:
           Type: HttpApi
