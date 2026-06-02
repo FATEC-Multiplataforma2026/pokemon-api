@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: pokemon-api
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    activate:
+      on-profile: local
+
+dynamodb:
+  region: us-east-1
+  endpoint: http://localhost:8000
+  access-key: fake
+  secret-key: fake
+  tables:
+    capture-pokemon: pokemon-api-capture-local
+    users: pokemon-api-users-local
+
+pokeapi:
+  url: https://pokeapi.co/api/v2
+
+logging:
+  level:
+    org.springframework.data.redis: DEBUG

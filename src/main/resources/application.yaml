@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ${POKEMON_API_NAME}
+  main:
+    allow-bean-definition-overriding: true
+
+dynamodb:
+  region: ${POKEMON_API_DYNAMO_REGION}
+  access-key: ${POKEMON_API_ACCESS_KEY}
+  secret-key: ${POKEMON_API_SECRET_KEY}
+  tables:
+    name: ${POKEMON_API_DYNAMO_TABLE_NAME}
+    capture-pokemon: ${POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE}
+    users: ${POKEMON_DYNAMO_USERS_TABLE}
+
+pokeapi:
+  url: ${POKEAPI_URL}
+
+logging:
+  level:
+    org.springframework.data.redis: DEBUG

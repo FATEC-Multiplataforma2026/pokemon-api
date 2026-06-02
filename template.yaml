@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Serverless Java Container GraalVM
+
+Globals:
+  Function:
+    MemorySize: 256
+    Timeout: 15
+    Runtime: provided.al2023
+    Architectures:
+      - x86_64
+  Api:
+    EndpointConfiguration: REGIONAL
+
+Parameters:
+  ApiStageName:
+    Type: String
+    Default: dev
+
+Resources:
+  PokemonApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Name: PokemonApi
+      CorsConfiguration:
+        AllowOrigins: [ "*" ]
+        AllowMethods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+      Auth:
+        DefaultAuthorizer: CognitoAuthorizer
+        Authorizers:
+          CognitoAuthorizer:
+            JwtConfiguration:
+              issuer: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_lXxl9337a
+              audience:
+                - 4m19bj8gtkrnf7ufiafbefqbn0
+            IdentitySource: "$request.header.Authorization"
+
+  PokemonApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: NOP
+      CodeUri: ./target/pokemon-api-0.0.1-SNAPSHOT-native-zip.zip
+      FunctionName: pokemon-api
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0e3247e52091f7040
+        SubnetIds:
+          - subnet-09bbec70c963efe13
+          - subnet-0dd1a04dd92363bac
+          - subnet-0b78956167cd4cd3f
+      Environment:
+        Variables:
+          POKEMON_API_NAME: !Ref appName
+          POKEMON_API_DYNAMO_REGION: !Ref appRegion
+          POKEMON_API_ACCESS_KEY: !Ref appAccessKey
+          POKEMON_API_SECRET_KEY: !Ref appSecretKey
+          POKEMON_API_DYNAMO_TABLE_NAME: !Ref appDynamoTableName
+          POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE: !Ref appDynamoCapturePokemonTable
+          POKEMON_DYNAMO_USERS_TABLE: !Ref appDynamoUsersTable
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - cognito-idp:AdminInitiateAuth
+              Resource:
+                - arn:aws:cognito-idp:us-east-1:103120217022:userpool/us-east-1_lXxl9337a
+      Events:
+        Register:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/register
+            Method: POST
+            ApiId: !Ref OlharFinanceiroApi
+        Login:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/login
+            Method: POST
+            ApiId: !Ref OlharFinanceiroApi
+        team-get:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/team
+            Method: GET
+            ApiId: !Ref OlharFinanceiroApi
+        team-put:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/team
+            Method: PUT
+            ApiId: !Ref OlharFinanceiroApi
+        captured-put:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/captured
+            Method: PUT
+            ApiId: !Ref OlharFinanceiroApi
+        captured-delete:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/captured
+            Method: DELETE
+            ApiId: !Ref OlharFinanceiroApi
+
+Outputs:
+  ApiUrl:
+    Description: URL da API com stage default
+    Value: !Sub 'https://${OlharFinanceiroApi}.execute-api.${AWS::Region}.amazonaws.com'
