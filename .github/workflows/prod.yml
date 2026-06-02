@@ -20,6 +20,11 @@ jobs:
             printf '%s' "$1" | tr -d '\n' | sed 's/[\/&|]/\\&/g'
           }
           sed -i "s|!Ref appName|$(sanitize "${{ secrets.APP_NAME }}")|g" template.yaml
+          sed -i "s|!Ref appDynamoTableName|$(sanitize "${{ secrets.POKEMON_API_DYNAMO_TABLE_NAME }}")|g" template.yaml
+          sed -i "s|!Ref appDynamoCapturePokemonTable|$(sanitize "${{ secrets.POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE }}")|g" template.yaml
+          sed -i "s|!Ref appDynamoUsersTable|$(sanitize "${{ secrets.POKEMON_DYNAMO_USERS_TABLE }}")|g" template.yaml
+          sed -i "s|COGNITO_ISSUER|$(sanitize "${{ secrets.COGNITO_ISSUER }}")|g" template.yaml
+          sed -i "s|COGNITO_AUDIENCE|$(sanitize "${{ secrets.COGNITO_AUDIENCE }}")|g" template.yaml
 
       - name: Create env file
         run: |

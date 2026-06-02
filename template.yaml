@@ -30,9 +30,9 @@ Resources:
         Authorizers:
           CognitoAuthorizer:
             JwtConfiguration:
-              issuer: https://cognito-idp.us-east-1.amazonaws.com/us-east-1_lXxl9337a
+              issuer: COGNITO_ISSUER
               audience:
-                - 4m19bj8gtkrnf7ufiafbefqbn0
+                - COGNITO_AUDIENCE
             IdentitySource: "$request.header.Authorization"
 
   PokemonApiFunction:
@@ -71,39 +71,39 @@ Resources:
           Properties:
             Path: /api-pokemon/auth/v1/register
             Method: POST
-            ApiId: !Ref OlharFinanceiroApi
+            ApiId: !Ref PokemonApi
         Login:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/login
             Method: POST
-            ApiId: !Ref OlharFinanceiroApi
+            ApiId: !Ref PokemonApi
         team-get:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/team
             Method: GET
-            ApiId: !Ref OlharFinanceiroApi
+            ApiId: !Ref PokemonApi
         team-put:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/team
             Method: PUT
-            ApiId: !Ref OlharFinanceiroApi
+            ApiId: !Ref PokemonApi
         captured-put:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/captured
             Method: PUT
-            ApiId: !Ref OlharFinanceiroApi
+            ApiId: !Ref PokemonApi
         captured-delete:
           Type: HttpApi
           Properties:
             Path: /api-pokemon/auth/v1/captured
             Method: DELETE
-            ApiId: !Ref OlharFinanceiroApi
+            ApiId: !Ref PokemonApi
 
 Outputs:
   ApiUrl:
     Description: URL da API com stage default
-    Value: !Sub 'https://${OlharFinanceiroApi}.execute-api.${AWS::Region}.amazonaws.com'
+    Value: !Sub 'https://${PokemonApi}.execute-api.${AWS::Region}.amazonaws.com'
