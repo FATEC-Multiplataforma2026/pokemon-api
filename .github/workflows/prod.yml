@@ -19,7 +19,10 @@ jobs:
           sanitize() {
             printf '%s' "$1" | tr -d '\n' | sed 's/[\/&|]/\\&/g'
           }
-          sed -i "s|!Ref appName|$(sanitize "${{ secrets.APP_NAME }}")|g" template.yaml
+          sed -i "s|!Ref appName|$(sanitize "${{ secrets.POKEMON_API_NAME }}")|g" template.yaml
+          sed -i "s|!Ref appRegion|$(sanitize "${{ secrets.AWS_CLOUD_REGION_PROD }}")|g" template.yaml
+          sed -i "s|!Ref appAccessKey|$(sanitize "${{ secrets.AWS_CLOUD_ACCESS_KEY }}")|g" template.yaml
+          sed -i "s|!Ref appSecretKey|$(sanitize "${{ secrets.AWS_CLOUD_SECRET_KEY }}")|g" template.yaml
           sed -i "s|!Ref appDynamoTableName|$(sanitize "${{ secrets.POKEMON_API_DYNAMO_TABLE_NAME }}")|g" template.yaml
           sed -i "s|!Ref appDynamoCapturePokemonTable|$(sanitize "${{ secrets.POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE }}")|g" template.yaml
           sed -i "s|!Ref appDynamoUsersTable|$(sanitize "${{ secrets.POKEMON_DYNAMO_USERS_TABLE }}")|g" template.yaml
