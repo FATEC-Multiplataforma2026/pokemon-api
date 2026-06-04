@@ -16,8 +16,6 @@ Parameters:
   ApiStageName:
     Type: String
     Default: dev
-  appPokeApiUrl:
-    Type: String
 
 Resources:
   PokemonApi:
@@ -48,10 +46,10 @@ Resources:
           POKEMON_API_DYNAMO_REGION: !Ref appRegion
           POKEMON_API_ACCESS_KEY: !Ref appAccessKey
           POKEMON_API_SECRET_KEY: !Ref appSecretKey
+          POKEAPI_URL: !Ref appPokeApiUrl
           POKEMON_API_DYNAMO_TABLE_NAME: !Ref appDynamoTableName
           POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE: !Ref appDynamoCapturePokemonTable
           POKEMON_DYNAMO_USERS_TABLE: !Ref appDynamoUsersTable
-          POKEAPI_URL: !Ref appPokeApiUrl
       Policies:
         - AWSLambdaBasicExecutionRole
       Events:
