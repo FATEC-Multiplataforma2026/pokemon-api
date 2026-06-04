@@ -14,13 +14,13 @@ public class BattleResource {
     @ResponseStatus(OK)
     @PutMapping(path = "/battle")
     public String battle() {
-        return null;
+        return "battle";
     }
 
     @ResponseStatus(OK)
     @PutMapping(path = "/new-pokemon")
     public String newPokemon() {
-        return null;
+        return "new-pokemon";
     }
 
 }
