@@ -2,4 +2,4 @@
 
 cd ${LAMBDA_TASK_ROOT:-.}
 
-./olhar-financeiro -Dlogging.level.org.springframework=DEBUG -Dlogging.level.com.amazonaws.serverless.proxy.spring=DEBUG
+./pokemon-api -Dlogging.level.org.springframework=DEBUG -Dlogging.level.com.amazonaws.serverless.proxy.spring=DEBUG
