@@ -26,8 +26,8 @@ public class RestExceptionHandler {
     @ResponseBody
     @ResponseStatus(INTERNAL_SERVER_ERROR)
     @ExceptionHandler({InternalError.class, RuntimeException.class})
-    public ErrorResponse handleInternalServerError(InternalError exception) {
-        LOG.error("Error: {}", exception.getMessage());
+    public ErrorResponse handleInternalServerError(RuntimeException exception) {
+        LOG.error("Error: {}", exception.getMessage(), exception);
         return new ErrorResponse(
                 LocalDateTime.now(),
                 INTERNAL_SERVER_ERROR.value(),
@@ -37,8 +37,8 @@ public class RestExceptionHandler {
 
     @ResponseBody
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler({NullPointerException.class, NotFoundException.class})
-    public ErrorResponse handleNotFound(Exception exception) {
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorResponse handleNotFound(NotFoundException exception) {
         return new ErrorResponse(
                 LocalDateTime.now(),
                 NOT_FOUND.value(),
