@@ -6,17 +6,30 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PokemonDetailResponse {
-    private int id;
+    private Integer id;
     private String name;
     private PokemonSpritesResponse sprites;
     private List<PokemonTypeSlotResponse> types;
     private List<PokemonStatSlotResponse> stats;
 
-    public int getId() {
+    public PokemonDetailResponse(
+            Integer id,
+            String name,
+            PokemonSpritesResponse sprites,
+            List<PokemonTypeSlotResponse> types,
+            List<PokemonStatSlotResponse> stats) {
+        this.id = id;
+        this.name = name;
+        this.sprites = sprites;
+        this.types = types;
+        this.stats = stats;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

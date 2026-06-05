@@ -8,6 +8,10 @@ public class PokemonSpritesResponse {
     @JsonProperty("front_default")
     private String frontDefault;
 
+    public PokemonSpritesResponse(String frontDefault) {
+        this.frontDefault = frontDefault;
+    }
+
     public String getFrontDefault() {
         return frontDefault;
     }

@@ -729,6 +729,66 @@
   "queryAllDeclaredConstructors":true
 },
 {
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonDetailResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonSpritesResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonTypeSlotResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonTypeInfoResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonStatSlotResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonStatInfoResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonListResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonItemResponse",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.entity.Pokemon",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
+  "name":"io.github.mrspock182.pokemon.entity.Power",
+  "allDeclaredFields":true,
+  "allDeclaredMethods":true,
+  "allDeclaredConstructors":true
+},
+{
   "name":"io.netty.buffer.PooledByteBufAllocator"
 },
 {
