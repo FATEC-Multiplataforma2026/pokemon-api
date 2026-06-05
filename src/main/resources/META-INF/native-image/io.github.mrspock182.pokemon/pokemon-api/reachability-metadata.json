@@ -1,0 +1,110 @@
+{
+  "reflection": [
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonDetailResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getId", "parameterTypes": []},
+        {"name": "setId", "parameterTypes": ["int"]},
+        {"name": "getName", "parameterTypes": []},
+        {"name": "setName", "parameterTypes": ["java.lang.String"]},
+        {"name": "getSprites", "parameterTypes": []},
+        {"name": "setSprites", "parameterTypes": ["io.github.mrspock182.pokemon.integration.dto.PokemonSpritesResponse"]},
+        {"name": "getTypes", "parameterTypes": []},
+        {"name": "setTypes", "parameterTypes": ["java.util.List"]},
+        {"name": "getStats", "parameterTypes": []},
+        {"name": "setStats", "parameterTypes": ["java.util.List"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonSpritesResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getFrontDefault", "parameterTypes": []},
+        {"name": "setFrontDefault", "parameterTypes": ["java.lang.String"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonTypeSlotResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getType", "parameterTypes": []},
+        {"name": "setType", "parameterTypes": ["io.github.mrspock182.pokemon.integration.dto.PokemonTypeInfoResponse"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonTypeInfoResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getName", "parameterTypes": []},
+        {"name": "setName", "parameterTypes": ["java.lang.String"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonStatSlotResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getBaseStat", "parameterTypes": []},
+        {"name": "setBaseStat", "parameterTypes": ["int"]},
+        {"name": "getStat", "parameterTypes": []},
+        {"name": "setStat", "parameterTypes": ["io.github.mrspock182.pokemon.integration.dto.PokemonStatInfoResponse"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonStatInfoResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getName", "parameterTypes": []},
+        {"name": "setName", "parameterTypes": ["java.lang.String"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonListResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getResults", "parameterTypes": []},
+        {"name": "setResults", "parameterTypes": ["java.util.List"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.integration.dto.PokemonItemResponse",
+      "methods": [
+        {"name": "<init>", "parameterTypes": []},
+        {"name": "getName", "parameterTypes": []},
+        {"name": "setName", "parameterTypes": ["java.lang.String"]},
+        {"name": "getUrl", "parameterTypes": []},
+        {"name": "setUrl", "parameterTypes": ["java.lang.String"]}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.entity.Pokemon",
+      "methods": [
+        {"name": "<init>", "parameterTypes": ["java.lang.String", "java.lang.String", "java.lang.String", "java.util.List", "java.util.List"]},
+        {"name": "index", "parameterTypes": []},
+        {"name": "name", "parameterTypes": []},
+        {"name": "image", "parameterTypes": []},
+        {"name": "types", "parameterTypes": []},
+        {"name": "abilities", "parameterTypes": []}
+      ],
+      "fields": [
+        {"name": "index"},
+        {"name": "name"},
+        {"name": "image"},
+        {"name": "types"},
+        {"name": "abilities"}
+      ]
+    },
+    {
+      "type": "io.github.mrspock182.pokemon.entity.Power",
+      "methods": [
+        {"name": "<init>", "parameterTypes": ["java.lang.String", "java.math.BigDecimal"]},
+        {"name": "name", "parameterTypes": []},
+        {"name": "strength", "parameterTypes": []}
+      ],
+      "fields": [
+        {"name": "name"},
+        {"name": "strength"}
+      ]
+    }
+  ]
+}
