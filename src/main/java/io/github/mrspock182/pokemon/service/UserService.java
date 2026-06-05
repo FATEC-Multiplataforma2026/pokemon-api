@@ -11,7 +11,6 @@ import java.security.NoSuchAlgorithmException;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
     private final PokemonService pokemonService;
 

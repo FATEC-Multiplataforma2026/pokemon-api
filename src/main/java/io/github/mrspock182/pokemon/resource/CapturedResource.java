@@ -11,7 +11,6 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/api-pokemon/pokemon/v1")
 public class CapturedResource {
-
     private final CapturedService capturedService;
 
     public CapturedResource(CapturedService capturedService) {

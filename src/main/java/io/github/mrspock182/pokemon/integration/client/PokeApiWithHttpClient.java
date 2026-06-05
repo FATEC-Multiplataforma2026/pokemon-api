@@ -3,6 +3,8 @@ package io.github.mrspock182.pokemon.integration.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mrspock182.pokemon.integration.dto.PokemonDetailResponse;
 import io.github.mrspock182.pokemon.integration.dto.PokemonListResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,6 +18,8 @@ import java.time.Duration;
 
 @Component
 public class PokeApiWithHttpClient {
+    private static final Logger log = LogManager.getLogger(PokeApiWithHttpClient.class);
+
     private final String baseUrl;
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
@@ -57,14 +61,17 @@ public class PokeApiWithHttpClient {
                     .path("/pokemon/{id}")
                     .buildAndExpand(id)
                     .toUriString();
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(8))
                     .GET()
                     .header("Accept", "application/json")
                     .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            validarResposta(response);
+
+            HttpResponse<String> response = httpClient.send(
+                    request, HttpResponse.BodyHandlers.ofString());
+
+            log.info("Response from Pokemon API: {}", response.body());
             return objectMapper.readValue(response.body(), PokemonDetailResponse.class);
         } catch (IOException | InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -74,9 +81,9 @@ public class PokeApiWithHttpClient {
 
     private void validarResposta(HttpResponse<String> response) {
         if (response.statusCode() >= 400) {
-            throw new RuntimeException(
-                    "Erro na API externa. Status Code: " + response.statusCode()
-                            + " - " + response.body());
+            throw new RuntimeException("Erro na API externa. Status Code: "
+                    + response.statusCode()
+                    + " - " + response.body());
         }
     }
 
