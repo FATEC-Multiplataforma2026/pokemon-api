@@ -1,7 +1,14 @@
 package io.github.mrspock182.pokemon.integration.client;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.mrspock182.pokemon.integration.dto.PokemonDetailResponse;
+import io.github.mrspock182.pokemon.integration.dto.PokemonSpritesResponse;
+import io.github.mrspock182.pokemon.integration.dto.PokemonStatInfoResponse;
+import io.github.mrspock182.pokemon.integration.dto.PokemonStatSlotResponse;
+import io.github.mrspock182.pokemon.integration.dto.PokemonTypeInfoResponse;
+import io.github.mrspock182.pokemon.integration.dto.PokemonTypeSlotResponse;
+import io.github.mrspock182.pokemon.integration.dto.PokemonItemResponse;
 import io.github.mrspock182.pokemon.integration.dto.PokemonListResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +22,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class PokeApiWithHttpClient {
@@ -48,7 +57,7 @@ public class PokeApiWithHttpClient {
                     .build();
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             validarResposta(response);
-            return objectMapper.readValue(response.body(), PokemonListResponse.class);
+            return parsePokemonList(objectMapper.readTree(response.body()));
         } catch (IOException | InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Erro ao listar pokemons via HttpClient", e);
@@ -72,11 +81,60 @@ public class PokeApiWithHttpClient {
                     request, HttpResponse.BodyHandlers.ofString());
 
             log.info("Response from Pokemon API: {}", response.body());
-            return objectMapper.readValue(response.body(), PokemonDetailResponse.class);
-        } catch (IOException | InterruptedException e) {
+
+            return parsePokemonDetail(objectMapper.readTree(response.body()));
+
+        } catch (IOException | InterruptedException ex) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException("Erro ao buscar detalhes do pokemon " + id, e);
+            throw new RuntimeException("Erro ao buscar detalhes do pokemon-id: " +
+                    id + " - message: " + ex.getMessage());
         }
+    }
+
+    private PokemonListResponse parsePokemonList(JsonNode root) {
+        List<PokemonItemResponse> items = new ArrayList<>();
+        for (JsonNode node : root.path("results")) {
+            PokemonItemResponse item = new PokemonItemResponse();
+            item.setName(node.path("name").asText());
+            item.setUrl(node.path("url").asText());
+            items.add(item);
+        }
+        PokemonListResponse list = new PokemonListResponse();
+        list.setResults(items);
+        return list;
+    }
+
+    private PokemonDetailResponse parsePokemonDetail(JsonNode root) {
+        PokemonDetailResponse detail = new PokemonDetailResponse();
+        detail.setId(root.get("id").asInt());
+        detail.setName(root.get("name").asText());
+
+        PokemonSpritesResponse sprites = new PokemonSpritesResponse();
+        sprites.setFrontDefault(root.path("sprites").path("front_default").asText(null));
+        detail.setSprites(sprites);
+
+        List<PokemonTypeSlotResponse> types = new ArrayList<>();
+        for (JsonNode slot : root.path("types")) {
+            PokemonTypeInfoResponse typeInfo = new PokemonTypeInfoResponse();
+            typeInfo.setName(slot.path("type").path("name").asText());
+            PokemonTypeSlotResponse typeSlot = new PokemonTypeSlotResponse();
+            typeSlot.setType(typeInfo);
+            types.add(typeSlot);
+        }
+        detail.setTypes(types);
+
+        List<PokemonStatSlotResponse> stats = new ArrayList<>();
+        for (JsonNode slot : root.path("stats")) {
+            PokemonStatInfoResponse statInfo = new PokemonStatInfoResponse();
+            statInfo.setName(slot.path("stat").path("name").asText());
+            PokemonStatSlotResponse statSlot = new PokemonStatSlotResponse();
+            statSlot.setBaseStat(slot.path("base_stat").asInt());
+            statSlot.setStat(statInfo);
+            stats.add(statSlot);
+        }
+        detail.setStats(stats);
+
+        return detail;
     }
 
     private void validarResposta(HttpResponse<String> response) {

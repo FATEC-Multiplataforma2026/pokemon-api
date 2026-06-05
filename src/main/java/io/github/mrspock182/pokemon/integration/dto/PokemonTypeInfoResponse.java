@@ -6,10 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class PokemonTypeInfoResponse {
     private String name;
 
-    public PokemonTypeInfoResponse(String name) {
-        this.name = name;
-    }
-
     public String getName() {
         return name;
     }

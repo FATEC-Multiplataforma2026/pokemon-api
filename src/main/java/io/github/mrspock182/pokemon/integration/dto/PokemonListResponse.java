@@ -8,10 +8,6 @@ import java.util.List;
 public class PokemonListResponse {
     private List<PokemonItemResponse> results;
 
-    public PokemonListResponse(List<PokemonItemResponse> results) {
-        this.results = results;
-    }
-
     public List<PokemonItemResponse> getResults() {
         return results;
     }

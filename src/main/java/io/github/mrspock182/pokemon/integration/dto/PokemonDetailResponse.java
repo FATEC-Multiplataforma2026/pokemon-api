@@ -12,19 +12,6 @@ public class PokemonDetailResponse {
     private List<PokemonTypeSlotResponse> types;
     private List<PokemonStatSlotResponse> stats;
 
-    public PokemonDetailResponse(
-            Integer id,
-            String name,
-            PokemonSpritesResponse sprites,
-            List<PokemonTypeSlotResponse> types,
-            List<PokemonStatSlotResponse> stats) {
-        this.id = id;
-        this.name = name;
-        this.sprites = sprites;
-        this.types = types;
-        this.stats = stats;
-    }
-
     public Integer getId() {
         return id;
     }

@@ -9,11 +9,6 @@ public class PokemonStatSlotResponse {
     private int baseStat;
     private PokemonStatInfoResponse stat;
 
-    public PokemonStatSlotResponse(int baseStat, PokemonStatInfoResponse stat) {
-        this.baseStat = baseStat;
-        this.stat = stat;
-    }
-
     public int getBaseStat() {
         return baseStat;
     }
