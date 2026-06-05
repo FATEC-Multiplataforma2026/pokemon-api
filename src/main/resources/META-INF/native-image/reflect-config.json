@@ -729,6 +729,24 @@
   "queryAllDeclaredConstructors":true
 },
 {
+  "name":"io.github.mrspock182.pokemon.entity.Pokemon",
+  "allDeclaredFields":true,
+  "allRecordComponents":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.List","java.util.List"]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.entity.Power",
+  "allDeclaredFields":true,
+  "allRecordComponents":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.math.BigDecimal"]}]
+},
+{
   "name":"io.github.mrspock182.pokemon.integration.dto.PokemonDetailResponse",
   "allDeclaredFields":true,
   "allDeclaredClasses":true,
