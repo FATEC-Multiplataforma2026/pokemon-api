@@ -1,33 +1,54 @@
 package io.github.mrspock182.pokemon.integration.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record PokemonDetailResponse(
-        int id,
-        String name,
-        Sprites sprites,
-        List<TypeSlot> types,
-        List<StatSlot> stats
-) {
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Sprites(@JsonProperty("front_default") String frontDefault) {}
+public class PokemonDetailResponse {
+    private int id;
+    private String name;
+    private PokemonSpritesResponse sprites;
+    private List<PokemonTypeSlotResponse> types;
+    private List<PokemonStatSlotResponse> stats;
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record TypeSlot(TypeInfo type) {
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record TypeInfo(String name) {}
+    public int getId() {
+        return id;
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record StatSlot(
-            @JsonProperty("base_stat") int baseStat,
-            StatInfo stat
-    ) {
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        public record StatInfo(String name) {}
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PokemonSpritesResponse getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(PokemonSpritesResponse sprites) {
+        this.sprites = sprites;
+    }
+
+    public List<PokemonTypeSlotResponse> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<PokemonTypeSlotResponse> types) {
+        this.types = types;
+    }
+
+    public List<PokemonStatSlotResponse> getStats() {
+        return stats;
+    }
+
+    public void setStats(List<PokemonStatSlotResponse> stats) {
+        this.stats = stats;
     }
 }

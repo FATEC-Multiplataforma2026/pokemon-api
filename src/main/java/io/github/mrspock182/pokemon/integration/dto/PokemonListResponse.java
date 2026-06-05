@@ -5,8 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record PokemonListResponse(List<PokemonItem> results) {
+public class PokemonListResponse {
+    private List<PokemonItemResponse> results;
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record PokemonItem(String name, String url) {}
+    public List<PokemonItemResponse> getResults() {
+        return results;
+    }
+
+    public void setResults(List<PokemonItemResponse> results) {
+        this.results = results;
+    }
 }

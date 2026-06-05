@@ -11,18 +11,18 @@ public class PokemonIntegrationAdapter {
     private PokemonIntegrationAdapter() {}
 
     public static Pokemon cast(PokemonDetailResponse response) {
-        List<String> types = response.types().stream()
-                .map(t -> t.type().name())
+        List<String> types = response.getTypes().stream()
+                .map(t -> t.getType().getName())
                 .toList();
 
-        List<Power> powers = response.stats().stream()
-                .map(s -> new Power(s.stat().name(), BigDecimal.valueOf(s.baseStat())))
+        List<Power> powers = response.getStats().stream()
+                .map(s -> new Power(s.getStat().getName(), BigDecimal.valueOf(s.getBaseStat())))
                 .toList();
 
         return new Pokemon(
-                String.valueOf(response.id()),
-                response.name(),
-                response.sprites().frontDefault(),
+                String.valueOf(response.getId()),
+                response.getName(),
+                response.getSprites().getFrontDefault(),
                 types,
                 powers
         );
