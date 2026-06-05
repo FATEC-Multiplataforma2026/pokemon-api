@@ -729,6 +729,62 @@
   "queryAllDeclaredConstructors":true
 },
 {
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonDetailResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonSpritesResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonTypeSlotResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonTypeInfoResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonStatSlotResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonStatInfoResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonListResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
+  "name":"io.github.mrspock182.pokemon.integration.dto.PokemonItemResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllPublicMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[]}]
+},
+{
   "name":"io.github.mrspock182.pokemon.entity.Pokemon",
   "allDeclaredFields":true,
   "allRecordComponents":true,
