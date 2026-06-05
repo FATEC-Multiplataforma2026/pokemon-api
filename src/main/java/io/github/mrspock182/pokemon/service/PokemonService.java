@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -30,15 +31,16 @@ public class PokemonService {
     private List<Pokemon> generateTeam() {
         List<Integer> ids = new ArrayList<>();
         while (ids.size() < TEAM_SIZE) {
-            int id = ThreadLocalRandom
-                    .current()
-                    .nextInt(1, TOTAL_POKEMONS + 1);
+            int id = ThreadLocalRandom.current().nextInt(1, TOTAL_POKEMONS + 1);
             if (!ids.contains(id)) {
                 ids.add(id);
             }
         }
-        return ids.stream()
-                .map(pokeApiGateway::findPokemonById)
+        List<CompletableFuture<Pokemon>> futures = ids.stream()
+                .map(id -> CompletableFuture.supplyAsync(() -> pokeApiGateway.findPokemonById(id)))
+                .toList();
+        return futures.stream()
+                .map(CompletableFuture::join)
                 .toList();
     }
 }

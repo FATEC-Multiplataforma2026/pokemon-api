@@ -38,7 +38,7 @@ public class PokeApiWithHttpClient {
                     .toUriString();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(5))
+                    .timeout(Duration.ofSeconds(8))
                     .GET()
                     .header("Accept", "application/json")
                     .build();
@@ -59,7 +59,7 @@ public class PokeApiWithHttpClient {
                     .toUriString();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
-                    .timeout(Duration.ofSeconds(5))
+                    .timeout(Duration.ofSeconds(8))
                     .GET()
                     .header("Accept", "application/json")
                     .build();

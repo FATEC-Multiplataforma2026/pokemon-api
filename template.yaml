@@ -26,7 +26,6 @@ Resources:
         AllowOrigins: [ "*" ]
         AllowMethods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
 
-
   PokemonApiFunction:
     Type: AWS::Serverless::Function
     Properties:
