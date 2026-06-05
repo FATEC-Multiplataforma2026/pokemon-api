@@ -104,7 +104,7 @@
                         <artifactId>native-maven-plugin</artifactId>
                         <configuration>
                             <buildArgs>
-                                <buildArg>--enable-url-protocols=http</buildArg>
+                                <buildArg>--enable-url-protocols=http,https</buildArg>
                                 <buildArg>-march=compatibility</buildArg>
                             </buildArgs>
                         </configuration>
