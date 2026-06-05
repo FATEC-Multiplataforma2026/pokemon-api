@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 
 @Component
 public class PokeApiWithHttpClient {
@@ -24,7 +25,9 @@ public class PokeApiWithHttpClient {
             @Value("${pokeapi.url}") String baseUrl) {
         this.baseUrl = baseUrl;
         this.objectMapper = objectMapper;
-        this.httpClient = HttpClient.newHttpClient();
+        this.httpClient = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(5))
+                .build();
     }
 
     public PokemonListResponse listPokemons(int limit) {
@@ -35,6 +38,7 @@ public class PokeApiWithHttpClient {
                     .toUriString();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
+                    .timeout(Duration.ofSeconds(5))
                     .GET()
                     .header("Accept", "application/json")
                     .build();
@@ -55,6 +59,7 @@ public class PokeApiWithHttpClient {
                     .toUriString();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
+                    .timeout(Duration.ofSeconds(5))
                     .GET()
                     .header("Accept", "application/json")
                     .build();
