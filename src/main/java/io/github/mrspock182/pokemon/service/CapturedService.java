@@ -22,7 +22,7 @@ public class CapturedService {
         return teamRepository.addCapture(userId, pokemon);
     }
 
-    public UserPokemon removePokemon(String userId, int index) {
+    public UserPokemon removePokemon(String userId, String index) {
         return teamRepository.removeCapture(userId, index);
     }
 

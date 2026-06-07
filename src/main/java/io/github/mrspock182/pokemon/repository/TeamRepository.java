@@ -130,7 +130,7 @@ public class TeamRepository {
             table.updateItem(orm);
 
             return TeamRepositoryAdapter.cast(orm);
-        } catch (BadRequestException ex) {
+        } catch (NotFoundException | BadRequestException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.error("Erro ao adicionar pokemon capturado para usuário: {}", userId, ex);
@@ -138,12 +138,15 @@ public class TeamRepository {
         }
     }
 
-    public UserPokemon removeCapture(String userId, int index) {
+    public UserPokemon removeCapture(String userId, String index) {
         try {
             UserPokemon userPokemon = findByUserId(userId);
             List<Pokemon> updatedCapture = new ArrayList<>(
                     userPokemon.capture() != null ? userPokemon.capture() : List.of());
-            updatedCapture.remove(index);
+            boolean removed = updatedCapture.removeIf(p -> p.index().equals(index));
+            if (!removed) {
+                throw new NotFoundException("Pokemon não encontrado no índice informado: " + index);
+            }
 
             CapturePokemonOrm orm = new CapturePokemonOrm();
             orm.setId(userPokemon.id());
@@ -153,8 +156,8 @@ public class TeamRepository {
             table.updateItem(orm);
 
             return TeamRepositoryAdapter.cast(orm);
-        } catch (IndexOutOfBoundsException ex) {
-            throw new NotFoundException("Pokemon não encontrado no índice informado");
+        } catch (NotFoundException ex) {
+            throw ex;
         } catch (Exception ex) {
             LOG.error("Erro ao remover pokemon capturado para usuário: {}", userId, ex);
             throw new InternalServerError("Erro ao remover pokemon capturado", ex);
