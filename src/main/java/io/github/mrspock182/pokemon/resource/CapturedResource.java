@@ -30,7 +30,7 @@ public class CapturedResource {
     @DeleteMapping(path = "/captured")
     public UserPokemonResponse removePokemon(
             @RequestParam("user-id") String userId,
-            @RequestParam("index") Integer index) {
+            @RequestParam("pokemon-id") Integer index) {
         UserPokemon userPokemon = capturedService.removePokemon(userId, index);
         return TeamResourceAdapter.cast(userPokemon);
     }
