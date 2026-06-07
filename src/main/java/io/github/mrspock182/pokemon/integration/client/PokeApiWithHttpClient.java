@@ -83,7 +83,6 @@ public class PokeApiWithHttpClient {
             log.info("Response from Pokemon API: {}", response.body());
 
             return parsePokemonDetail(objectMapper.readTree(response.body()));
-
         } catch (IOException | InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new RuntimeException("Erro ao buscar detalhes do pokemon-id: " +
