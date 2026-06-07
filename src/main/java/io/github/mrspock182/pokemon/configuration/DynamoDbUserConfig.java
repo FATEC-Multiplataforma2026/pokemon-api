@@ -30,6 +30,15 @@ public class DynamoDbUserConfig {
                 .addAttribute(String.class, a -> a.name("passwordHash")
                         .getter(UserOrm::getPasswordHash)
                         .setter(UserOrm::setPasswordHash))
+                .addAttribute(Integer.class, a -> a.name("level")
+                        .getter(UserOrm::getLevel)
+                        .setter(UserOrm::setLevel))
+                .addAttribute(Integer.class, a -> a.name("vitorias")
+                        .getter(UserOrm::getVitorias)
+                        .setter(UserOrm::setVitorias))
+                .addAttribute(Integer.class, a -> a.name("derrotas")
+                        .getter(UserOrm::getDerrotas)
+                        .setter(UserOrm::setDerrotas))
                 .build();
 
         return enhancedClient.table(tableName, schema);

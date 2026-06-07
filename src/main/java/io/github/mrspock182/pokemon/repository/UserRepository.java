@@ -35,14 +35,27 @@ public class UserRepository {
             orm.setId(UUID.randomUUID().toString());
             orm.setUsername(username);
             orm.setPasswordHash(passwordHash);
+            orm.setLevel(1);
+            orm.setVitorias(0);
+            orm.setDerrotas(0);
 
             table.putItem(orm);
-            return new User(orm.getId(), orm.getUsername(), orm.getPasswordHash());
+            return toUser(orm);
         } catch (BadRequestException ex) {
             throw ex;
         } catch (Exception ex) {
             LOG.error("Erro ao salvar usuário: {}", username, ex);
             throw new InternalServerError("Erro ao salvar usuário", ex);
+        }
+    }
+
+    public Optional<User> findById(String id) {
+        try {
+            UserOrm orm = table.getItem(Key.builder().partitionValue(id).build());
+            return Optional.ofNullable(orm).map(this::toUser);
+        } catch (Exception ex) {
+            LOG.error("Erro ao buscar usuário por id: {}", id, ex);
+            throw new InternalServerError("Erro ao buscar usuário", ex);
         }
     }
 
@@ -57,10 +70,38 @@ public class UserRepository {
                     .stream()
                     .flatMap(page -> page.items().stream())
                     .findFirst()
-                    .map(orm -> new User(orm.getId(), orm.getUsername(), orm.getPasswordHash()));
+                    .map(this::toUser);
         } catch (Exception ex) {
             LOG.error("Erro ao buscar usuário por username: {}", username, ex);
             throw new InternalServerError("Erro ao buscar usuário", ex);
         }
+    }
+
+    public User updateStats(
+            String id,
+            Integer level,
+            Integer vitorias,
+            Integer derrotas) {
+        try {
+            UserOrm orm = table.getItem(Key.builder().partitionValue(id).build());
+            if (orm == null) {
+                throw new BadRequestException("Usuário não encontrado");
+            }
+            orm.setLevel(level);
+            orm.setVitorias(vitorias);
+            orm.setDerrotas(derrotas);
+            table.putItem(orm);
+            return toUser(orm);
+        } catch (BadRequestException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.error("Erro ao atualizar stats do usuário: {}", id, ex);
+            throw new InternalServerError("Erro ao atualizar stats do usuário", ex);
+        }
+    }
+
+    private User toUser(UserOrm orm) {
+        return new User(orm.getId(), orm.getUsername(), orm.getPasswordHash(),
+                orm.getLevel(), orm.getVitorias(), orm.getDerrotas());
     }
 }

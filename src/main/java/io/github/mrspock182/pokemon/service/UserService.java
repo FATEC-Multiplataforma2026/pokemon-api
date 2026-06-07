@@ -34,6 +34,15 @@ public class UserService {
                 .orElseThrow(() -> new UnauthorizedException("Usuário ou senha inválidos"));
     }
 
+    public User getStats(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UnauthorizedException("Usuário não encontrado"));
+    }
+
+    public User updateStats(String userId, int level, int vitorias, int derrotas) {
+        return userRepository.updateStats(userId, level, vitorias, derrotas);
+    }
+
     private static String hash(String value) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");

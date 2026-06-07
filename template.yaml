@@ -101,6 +101,18 @@ Resources:
             Path: /api-pokemon/pokemon/v1/new-pokemon
             Method: PUT
             ApiId: !Ref PokemonApi
+        UserStatsGet:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/stats/{userId}
+            Method: GET
+            ApiId: !Ref PokemonApi
+        UserStatsPut:
+          Type: HttpApi
+          Properties:
+            Path: /api-pokemon/auth/v1/stats/{userId}
+            Method: PUT
+            ApiId: !Ref PokemonApi
 
 Outputs:
   ApiUrl:

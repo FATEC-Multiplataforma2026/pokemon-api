@@ -4,6 +4,9 @@ public class UserOrm {
     private String id;
     private String username;
     private String passwordHash;
+    private int level;
+    private int vitorias;
+    private int derrotas;
 
     public String getId() {
         return id;
@@ -27,5 +30,29 @@ public class UserOrm {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getVitorias() {
+        return vitorias;
+    }
+
+    public void setVitorias(int vitorias) {
+        this.vitorias = vitorias;
+    }
+
+    public int getDerrotas() {
+        return derrotas;
+    }
+
+    public void setDerrotas(int derrotas) {
+        this.derrotas = derrotas;
     }
 }
