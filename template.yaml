@@ -160,7 +160,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: io.github.mrspock182.pokemon.handler.WebSocketHandler::handleRequest
-      CodeUri: ./target/pokemon-api-0.0.1-native-zip.zip
+      Runtime: java21
+      CodeUri: ./target/pokemon-api-0.0.1.jar
       FunctionName: pokemon-api-websocket
       VpcConfig:
         SecurityGroupIds:
