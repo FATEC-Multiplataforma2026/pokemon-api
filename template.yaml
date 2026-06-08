@@ -18,8 +18,6 @@ Parameters:
     Default: dev
 
 Resources:
-
-  # ── REST API ──────────────────────────────────────────────────────────────
   PokemonApi:
     Type: AWS::Serverless::HttpApi
     Properties:
@@ -28,7 +26,6 @@ Resources:
         AllowOrigins: [ "*" ]
         AllowMethods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH" ]
         AllowHeaders: [ "*" ]
-
   PokemonApiFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -52,16 +49,8 @@ Resources:
           POKEMON_API_DYNAMO_TABLE_NAME: !Ref appDynamoTableName
           POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE: !Ref appDynamoCapturePokemonTable
           POKEMON_DYNAMO_USERS_TABLE: !Ref appDynamoUsersTable
-          CONNECTIONS_TABLE: !Ref appConnectionsTable
-          BATTLES_TABLE: !Ref appBattlesTable
-          WEBSOCKET_API_ENDPOINT: !Sub 'https://${PokemonWebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}'
       Policies:
         - AWSLambdaBasicExecutionRole
-        - Statement:
-            - Effect: Allow
-              Action:
-                - execute-api:ManageConnections
-              Resource: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${PokemonWebSocketApi}/*'
       Events:
         Register:
           Type: HttpApi
@@ -123,133 +112,8 @@ Resources:
             Path: /api-pokemon/auth/v1/stats/{userId}
             Method: PUT
             ApiId: !Ref PokemonApi
-        BattleInvite:
-          Type: HttpApi
-          Properties:
-            Path: /api-pokemon/battle/v1/invite/{targetUsername}
-            Method: POST
-            ApiId: !Ref PokemonApi
-        BattleAccept:
-          Type: HttpApi
-          Properties:
-            Path: /api-pokemon/battle/v1/accept/{battleId}
-            Method: POST
-            ApiId: !Ref PokemonApi
-        BattleDecline:
-          Type: HttpApi
-          Properties:
-            Path: /api-pokemon/battle/v1/decline/{battleId}
-            Method: POST
-            ApiId: !Ref PokemonApi
-        BattleRound:
-          Type: HttpApi
-          Properties:
-            Path: /api-pokemon/battle/v1/{battleId}/round
-            Method: POST
-            ApiId: !Ref PokemonApi
-
-  # ── WEBSOCKET API ─────────────────────────────────────────────────────────
-  PokemonWebSocketApi:
-    Type: AWS::ApiGatewayV2::Api
-    Properties:
-      Name: PokemonWebSocketApi
-      ProtocolType: WEBSOCKET
-      RouteSelectionExpression: "$request.body.action"
-
-  PokemonWebSocketFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: io.github.mrspock182.pokemon.handler.WebSocketHandler::handleRequest
-      Runtime: java21
-      CodeUri: ./target/pokemon-api-0.0.1.jar
-      FunctionName: pokemon-api-websocket
-      VpcConfig:
-        SecurityGroupIds:
-          - sg-0e3247e52091f7040
-        SubnetIds:
-          - subnet-09bbec70c963efe13
-          - subnet-0dd1a04dd92363bac
-          - subnet-0b78956167cd4cd3f
-      Environment:
-        Variables:
-          POKEMON_API_NAME: !Ref appName
-          POKEMON_API_DYNAMO_REGION: !Ref appRegion
-          POKEMON_API_ACCESS_KEY: !Ref appAccessKey
-          POKEMON_API_SECRET_KEY: !Ref appSecretKey
-          POKEAPI_URL: !Ref appPokeApiUrl
-          POKEMON_API_DYNAMO_TABLE_NAME: !Ref appDynamoTableName
-          POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE: !Ref appDynamoCapturePokemonTable
-          POKEMON_DYNAMO_USERS_TABLE: !Ref appDynamoUsersTable
-          CONNECTIONS_TABLE: !Ref appConnectionsTable
-          BATTLES_TABLE: !Ref appBattlesTable
-          WEBSOCKET_API_ENDPOINT: !Sub 'https://${PokemonWebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}'
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - Statement:
-            - Effect: Allow
-              Action:
-                - execute-api:ManageConnections
-              Resource: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${PokemonWebSocketApi}/*'
-
-  WebSocketFunctionPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      Action: lambda:InvokeFunction
-      FunctionName: !Ref PokemonWebSocketFunction
-      Principal: apigateway.amazonaws.com
-      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${PokemonWebSocketApi}/*'
-
-  WebSocketConnectIntegration:
-    Type: AWS::ApiGatewayV2::Integration
-    Properties:
-      ApiId: !Ref PokemonWebSocketApi
-      IntegrationType: AWS_PROXY
-      IntegrationUri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${PokemonWebSocketFunction.Arn}/invocations'
-
-  ConnectRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref PokemonWebSocketApi
-      RouteKey: $connect
-      AuthorizationType: NONE
-      Target: !Sub 'integrations/${WebSocketConnectIntegration}'
-
-  DisconnectRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref PokemonWebSocketApi
-      RouteKey: $disconnect
-      AuthorizationType: NONE
-      Target: !Sub 'integrations/${WebSocketConnectIntegration}'
-
-  DefaultRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref PokemonWebSocketApi
-      RouteKey: $default
-      AuthorizationType: NONE
-      Target: !Sub 'integrations/${WebSocketConnectIntegration}'
-
-  WebSocketDeployment:
-    Type: AWS::ApiGatewayV2::Deployment
-    DependsOn:
-      - ConnectRoute
-      - DisconnectRoute
-      - DefaultRoute
-    Properties:
-      ApiId: !Ref PokemonWebSocketApi
-
-  WebSocketStage:
-    Type: AWS::ApiGatewayV2::Stage
-    Properties:
-      ApiId: !Ref PokemonWebSocketApi
-      DeploymentId: !Ref WebSocketDeployment
-      StageName: !Ref ApiStageName
 
 Outputs:
   ApiUrl:
     Description: URL da REST API
     Value: !Sub 'https://${PokemonApi}.execute-api.${AWS::Region}.amazonaws.com'
-  WebSocketUrl:
-    Description: URL do WebSocket API
-    Value: !Sub 'wss://${PokemonWebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${ApiStageName}'

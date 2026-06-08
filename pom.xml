@@ -51,11 +51,6 @@
             <artifactId>dynamodb-enhanced</artifactId>
             <version>2.41.4</version>
         </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>apigatewaymanagementapi</artifactId>
-            <version>2.41.4</version>
-        </dependency>
         <!-- AWS -->
 
         <!-- COMMONS -->
