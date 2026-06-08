@@ -1,6 +1,7 @@
 package io.github.mrspock182.pokemon.resource.handler;
 
 import io.github.mrspock182.pokemon.exception.BadRequestException;
+import io.github.mrspock182.pokemon.exception.ConflictException;
 import io.github.mrspock182.pokemon.exception.NotFoundException;
 import io.github.mrspock182.pokemon.exception.UnauthorizedException;
 import io.github.mrspock182.pokemon.resource.dto.ErrorResponse;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 import static org.springframework.http.HttpStatus.*;
+
+
 
 
 
@@ -54,6 +57,17 @@ public class RestExceptionHandler {
                 LocalDateTime.now(),
                 UNAUTHORIZED.value(),
                 UNAUTHORIZED.getReasonPhrase(),
+                exception.getMessage());
+    }
+
+    @ResponseBody
+    @ResponseStatus(CONFLICT)
+    @ExceptionHandler(ConflictException.class)
+    public ErrorResponse handleConflict(ConflictException exception) {
+        return new ErrorResponse(
+                LocalDateTime.now(),
+                CONFLICT.value(),
+                CONFLICT.getReasonPhrase(),
                 exception.getMessage());
     }
 

@@ -12,6 +12,11 @@ dynamodb:
     name: ${POKEMON_API_DYNAMO_TABLE_NAME}
     capture-pokemon: ${POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE}
     users: ${POKEMON_DYNAMO_USERS_TABLE}
+    connections: ${CONNECTIONS_TABLE}
+    battles: ${BATTLES_TABLE}
+
+websocket:
+  endpoint: ${WEBSOCKET_API_ENDPOINT}
 
 pokeapi:
   url: ${POKEAPI_URL}

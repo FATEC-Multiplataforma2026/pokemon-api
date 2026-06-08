@@ -27,6 +27,8 @@ jobs:
           sed -i "s|!Ref appDynamoTableName|$(sanitize "${{ secrets.POKEMON_API_DYNAMO_TABLE_NAME }}")|g" template.yaml
           sed -i "s|!Ref appDynamoCapturePokemonTable|$(sanitize "${{ secrets.POKEMON_DYNAMO_CAPTURE_POKEMON_TABLE }}")|g" template.yaml
           sed -i "s|!Ref appDynamoUsersTable|$(sanitize "${{ secrets.POKEMON_DYNAMO_USERS_TABLE }}")|g" template.yaml
+          sed -i "s|!Ref appConnectionsTable|$(sanitize "${{ secrets.CONNECTIONS_TABLE }}")|g" template.yaml
+          sed -i "s|!Ref appBattlesTable|$(sanitize "${{ secrets.BATTLES_TABLE }}")|g" template.yaml
 
       - name: Create env file
         run: |

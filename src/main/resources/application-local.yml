@@ -15,6 +15,11 @@ dynamodb:
   tables:
     capture-pokemon: pokemon-api-capture-local
     users: pokemon-api-users-local
+    connections: pokemon-api-connections-local
+    battles: pokemon-api-battles-local
+
+websocket:
+  endpoint: http://localhost:9999
 
 pokeapi:
   url: https://pokeapi.co/api/v2
