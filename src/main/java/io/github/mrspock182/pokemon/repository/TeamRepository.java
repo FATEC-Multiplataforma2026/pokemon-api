@@ -46,6 +46,51 @@ public class TeamRepository {
         }
     }
 
+    public UserPokemon reorder(String userId, List<String> teamOrder) {
+        try {
+            UserPokemon userPokemon = findByUserId(userId);
+            List<String> currentIndices = userPokemon.team()
+                    .stream()
+                    .map(Pokemon::index)
+                    .toList();
+
+            if (teamOrder.size() != currentIndices.size()) {
+                throw new BadRequestException("A lista de ordem deve conter exatamente "
+                        + currentIndices.size() + " pokémons");
+            }
+
+            boolean allMatch = teamOrder.stream()
+                    .allMatch(currentIndices::contains)
+                    && currentIndices.stream()
+                    .allMatch(teamOrder::contains);
+
+            if (!allMatch) {
+                throw new BadRequestException("A lista de ordem deve conter os mesmos pokémons do time atual");
+            }
+
+            List<Pokemon> reorderedTeam = teamOrder.stream()
+                    .map(index -> userPokemon.team().stream()
+                            .filter(p -> p.index().equals(index))
+                            .findFirst()
+                            .orElseThrow())
+                    .toList();
+
+            CapturePokemonOrm orm = new CapturePokemonOrm();
+            orm.setId(userPokemon.id());
+            orm.setUserId(userPokemon.userId());
+            orm.setTeam(reorderedTeam);
+            orm.setOptions(userPokemon.capture());
+            table.updateItem(orm);
+
+            return TeamRepositoryAdapter.cast(orm);
+        } catch (NotFoundException | BadRequestException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            LOG.error("Erro ao reordenar time do usuário: {}", userId, ex);
+            throw new InternalServerError("Erro ao reordenar time", ex);
+        }
+    }
+
     public UserPokemon update(String userId, String removedPokemon, String newPokemon) {
         try {
             UserPokemon userPokemon = findByUserId(userId);
